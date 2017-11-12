@@ -17,7 +17,7 @@ class BaseRange:
         self._end=datetime.datetime.strptime(end, self._inFormat)
         self._maxDays=(self._end-self._init).days
 
-    def buildRanges(self):
+    def buildRanges(self, reverse=False):
         """
         """
         sizis=self._dateRange
@@ -31,13 +31,26 @@ class BaseRange:
             else:
                 init=nextDate
                 end=nextDate+datetime.timedelta(days=self._dateRange)
-            yield resultRange(init.strftime(self._outFormat), end.strftime(self._outFormat))
+            yield resultRange(init.strftime(self._outFormat),
+                              end.strftime(self._outFormat))
+
 
 class Weekly(BaseRange):
     """
     """
 
     _dateRange=7
+
+    def __init__(self, *args, **kwargs):
+        """
+        """
+        super().__init__(*args, **kwargs)
+
+class Monthly(BaseRange):
+    """
+    """
+
+    _dateRange=30
 
     def __init__(self, *args, **kwargs):
         """
